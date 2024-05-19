@@ -1,22 +1,21 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject template;
     [SerializeField] private LayerMask layer;
 
     private GameObject prefab;
     
-    private Transform mainCameraTransform {get {return Camera.main.transform;}}
-
     //Temporary should be handle by UI Component.
-    void Awake() => Build();
+   // void Awake() => Build();
     
     void Update()
     {
+        if(prefab == null) return; 
         MovePreview();
         if (Input.GetMouseButtonDown(0))
-            Build();
+            prefab = null;
         if (Input.GetKey(KeyCode.Escape))
             Application.Quit();
         if(Input.GetMouseButtonDown(1))
@@ -25,7 +24,8 @@ public class ItemSpawner : MonoBehaviour
 
     private void MovePreview()
     {
-        if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit hit, 30f, layer))
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 30f, layer))
         {
             prefab.transform.position = new Vector3(
                         Mathf.Round(hit.point.x),
@@ -35,7 +35,7 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
-    private void Build() => prefab = Instantiate(template);
+    public void Build(GameObject template) => prefab = Instantiate(template);
     
     public void Rotate() => prefab.transform.Rotate(new Vector3(0, 90, 0), Space.Self);    
 }
