@@ -186,6 +186,11 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!1 &142150554 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 695446779035568645, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+  m_PrefabInstance: {fileID: 1018929572211688716}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &177898603 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7223150912289808249, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
@@ -950,6 +955,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2558846408679369142, guid: f57d6a48a168724448598da208d4e796, type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 142150554}
+    - target: {fileID: 2558846408679369142, guid: f57d6a48a168724448598da208d4e796, type: 3}
+      propertyPath: movement
+      value: 
+      objectReference: {fileID: 52162838}
     - target: {fileID: 2558846408679369142, guid: f57d6a48a168724448598da208d4e796, type: 3}
       propertyPath: itemSpawner
       value: 
