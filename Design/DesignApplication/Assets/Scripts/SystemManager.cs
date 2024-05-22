@@ -18,24 +18,23 @@ public class SystemManager : MonoBehaviour
     {
         inputManager = new();
         savingSystem = new();
-        inputManager.showUI += ShowUI;
         movement.SetInputManger(inputManager);
         SetItems(itemDataBase);
     }
 
     private void ShowUI(bool showUI)
     {
-        Cursor.lockState = showUI ? CursorLockMode.Confined : CursorLockMode.Locked;
-        Cursor.visible = showUI;
-        UI.SetActive(showUI);
+        
     }
 
     private void SetItems(ItemDataBase itemDataBase)
     {
         itemSpawner.SetInputManger(inputManager, savingSystem);
+        int i = 0;
         foreach(var item in itemDataBase.eachItems){
             ItemButton itemButton = Instantiate(itemDataBase.itemButton, itemButtonParents).GetComponent<ItemButton>();
-            itemButton.SetItem(item.itemSprite, item.prefab, itemSpawner);
+            itemButton.SetItem( item.itemSprite, item.prefab, itemSpawner, i);
+            i++;
         }
     }
 
@@ -43,6 +42,5 @@ public class SystemManager : MonoBehaviour
         inputManager.Run();
     }
     void OnDestroy(){
-        inputManager.showUI -= ShowUI;
     }
 }

@@ -9,26 +9,42 @@ public class InputManager
    public event Action<Vector2> rotationAction;
     public event Action onMouseLeftClick;
     public event Action onMouseRightClick;
-    private bool isUIShown = true;
+    public event Action objectRotation;
+    private bool isUIShown = false;
     public event Action<bool> showUI;
     public event Action<Vector3> mousePositionEvent;
     Vector2 rotation = Vector2.zero;
     Vector3 mousePosition;
     public InputManager()
     {
+         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;  
         showUI?.Invoke(isUIShown);
     }
 
     public void Run(){
-       // ShowUI();
+        HandleQuit();
+        ShowUI();
         HandleMouseLeftClick();
         handleMousePosition();
-        if(isUIShown)return;
-        HandleMovement();
-        HandleRotation();
         HandleMouseRightClick();
-
+        HandleMovement();
+        HandleCameraRotation();
+        HandleObjectRotation();
    }
+
+    private void HandleObjectRotation()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+            objectRotation?.Invoke();
+    }
+
+    private void HandleQuit()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            Application.Quit();
+        }
+    }
 
     private void handleMousePosition()
     {
@@ -50,7 +66,7 @@ public class InputManager
         onMouseLeftClick?.Invoke();
     }
 
-    private void HandleRotation()
+    private void HandleCameraRotation()
     {
         rotation.y += Input.GetAxis("Mouse X");
         rotation.x -= Input.GetAxis("Mouse Y");
@@ -60,6 +76,10 @@ public class InputManager
     private void ShowUI()
     {
         if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            EnableUI();
+        }
+         if(Input.GetKeyUp(KeyCode.LeftControl))
         {
             EnableUI();
         }

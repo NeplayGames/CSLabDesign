@@ -11,7 +11,7 @@ public class ItemDataBase: ScriptableObject {
     public class EachItems 
     {
         [field: SerializeField] public Sprite itemSprite {get; private set;} 
-        [field: SerializeField] public GameObject prefab {get; private set;} 
+        [field: SerializeField] public Item prefab {get; private set;} 
     }
 }
 

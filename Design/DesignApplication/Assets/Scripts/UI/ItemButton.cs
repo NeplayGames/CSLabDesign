@@ -1,37 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Data.Common;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemButton : MonoBehaviour
 {
     [SerializeField] private Image image;
-
-    private GameObject item;
-    private Button button;
-
-    private Button Button {
-        get {
-            if(button == null)
-                button = GetComponent<Button>(); 
-            return button; }
-    }
+    [SerializeField] private TextMeshProUGUI numberText;
+    private Item item;
+    private int buttonNumber;
+   
     private ItemSpawner itemSpawner;
-    public void SetItem(Sprite itemSprite, GameObject item, ItemSpawner spawner){
+    public void SetItem(Sprite itemSprite, Item item, ItemSpawner spawner, int number){
+        numberText.text = $"{number}";
+        buttonNumber = number;
         itemSpawner = spawner;
         image.sprite = itemSprite;
         this.item = item;
-        Button.onClick.AddListener(OnButtonClicked);
+    }
+    void Update(){
+        if(CheckPressed()){
+            itemSpawner.Build(item);
+        }
     }
 
-    private void OnButtonClicked()
-    {
-        itemSpawner.Build(item);
+    private bool CheckPressed(){
+        return Input.GetKeyDown(keyCode());
     }
 
-    private void OnDestroy(){
-         Button.onClick.RemoveListener(OnButtonClicked);
+    private KeyCode keyCode(){
+        return buttonNumber switch{
+            0 => KeyCode.Alpha0,
+            1 => KeyCode.Alpha1,
+            2 => KeyCode.Alpha2,
+            3 => KeyCode.Alpha3,
+            4 => KeyCode.Alpha4,
+            _=> KeyCode.Alpha0,
+        };
     }
 }

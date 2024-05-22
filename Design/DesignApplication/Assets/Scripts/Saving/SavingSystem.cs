@@ -20,65 +20,91 @@ public class SaveAndLoadSystem
         {
             // Read the existing data from the file
             string j = File.ReadAllText(SavingSystemName);
-            List<PrefabData> data = JsonUtility.FromJson<PrefabDatasWrapper>(j).data;
-            foreach (PrefabData dataItem in data){
+            List<ItemData> data = JsonUtility.FromJson<ItemDatasWrapper>(j).data;
+            foreach (ItemData dataItem in data){
                 LoadAndInstantiatePrefab(dataItem);
             }
         }
     }
 
-      void LoadAndInstantiatePrefab(PrefabData prefabData)
+      void LoadAndInstantiatePrefab(ItemData prefabData)
     {
         GameObject prefab = Resources.Load<GameObject>(prefabData.name);
 
         if (prefab != null)
         {
-           GameObject.Instantiate(prefab, prefabData.position, Quaternion.Euler(prefabData.rotation));
+           Item item = GameObject.Instantiate(prefab, prefabData.position, 
+           Quaternion.Euler(prefabData.rotation)).GetComponent<Item>();
+           item.ID = prefabData.ID;
+           
         }
         else
         {
-            Debug.LogError("Prefab not found: " + prefabData.name);
+            Debug.LogError("Prefab not found: " + prefabData.ID);
         }
     }
 
-    public void SavePrefab(string name, Vector3 position, Vector3 rotation){
+    public void RemoveItem(string id)
+    {
+        List<ItemData> data = GetDatas();
+        data.RemoveAll(dat => dat.ID == id);
+        SaveData(data);
+    }
 
-        List<PrefabData> data = new();
+    private List<ItemData> GetDatas()
+    {
+        List<ItemData> data = new();
         if (File.Exists(SavingSystemName))
         {
             // Read the existing data from the file
             string j = File.ReadAllText(SavingSystemName);
-            data = JsonUtility.FromJson<PrefabDatasWrapper>(j).data;
+            data = JsonUtility.FromJson<ItemDatasWrapper>(j).data;
         }
 
-        PrefabData prefabData = new PrefabData
+        return data;
+    }
+
+    public void SavePrefab(string name, string id, Vector3 position, Vector3 rotation)
+    {
+
+        List<ItemData> data = GetDatas();
+        data.RemoveAll(dat => dat.ID == id);
+        ItemData prefabData = new ItemData
         {
             name = name,
+            ID = id,
             position = position,
             rotation = rotation
         };
+        data.Add(prefabData);
 
-        PrefabDatasWrapper prefabDatasWrapper= new PrefabDatasWrapper{
+        SaveData(data);
+    }
+
+    private void SaveData(List<ItemData> data)
+    {
+        ItemDatasWrapper prefabDatasWrapper = new ItemDatasWrapper
+        {
             data = data,
         };
-        
-        data.Add(prefabData);
+
         Debug.Log(data);
         string json = JsonUtility.ToJson(prefabDatasWrapper, true);
-        File.WriteAllText(SavingSystemName , json);
+        File.WriteAllText(SavingSystemName, json);
         Debug.Log($"The file is store in {SavingSystemName}");
     }
 
     [System.Serializable]
-    public class PrefabData
+    public class ItemData
     {
         public string name;
+        public string ID;
         public Vector3 position;
         public Vector3 rotation;
     }
 
     [System.Serializable]
-    public class PrefabDatasWrapper{
-        public List<PrefabData> data = new();
+    public class ItemDatasWrapper{
+        public List<ItemData> data = new();
     }
 }

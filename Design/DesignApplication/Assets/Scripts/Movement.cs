@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     private Transform cameraTransform;
 
     private InputManager inputManager;
+
     public void SetInputManger(InputManager inputMan){
         this.inputManager = inputMan;
         inputManager.movmentAction += OnMovemntPressed;
@@ -19,9 +20,8 @@ public class Movement : MonoBehaviour
 
     private void OnRotationPressed(Vector2 rotation)
     {
-          transform.eulerAngles = new Vector2(0, rotation.y) * lookSpeed;
+        transform.eulerAngles = new Vector2(0, rotation.y) * lookSpeed;
         Quaternion cameraRotation = Quaternion.Euler(rotation.x * lookSpeed, 0, 0);
-
         cameraTransform.localRotation = cameraRotation;
     }
 
@@ -42,6 +42,5 @@ public class Movement : MonoBehaviour
     void OnDestroy(){
         inputManager.movmentAction -= OnMovemntPressed;
         inputManager.rotationAction -= OnRotationPressed;
-
     }
 }
