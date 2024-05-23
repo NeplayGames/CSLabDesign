@@ -5,15 +5,11 @@ public class ItemSpawner : MonoBehaviour
 {
     [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask itemLayer;
-
     private GameObject prefab;
     private InputManager inputManager;
     private SaveAndLoadSystem savingSystem;
     private string currentItemName;
-    private string ID;
-    //Temporary should be handle by UI Component.
-   // void Awake() => Build();
-    
+    private string ID;    
     private void MovePreview(Vector3 mousePosition)
     {
         if(prefab == null) return; 

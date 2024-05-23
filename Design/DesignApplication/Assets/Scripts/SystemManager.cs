@@ -30,7 +30,7 @@ public class SystemManager : MonoBehaviour
     private void SetItems(ItemDataBase itemDataBase)
     {
         itemSpawner.SetInputManger(inputManager, savingSystem);
-        int i = 0;
+        int i = 1;
         foreach(var item in itemDataBase.eachItems){
             ItemButton itemButton = Instantiate(itemDataBase.itemButton, itemButtonParents).GetComponent<ItemButton>();
             itemButton.SetItem( item.itemSprite, item.prefab, itemSpawner, i);

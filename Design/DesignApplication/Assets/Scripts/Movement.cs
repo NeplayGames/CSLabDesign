@@ -35,8 +35,12 @@ public class Movement : MonoBehaviour
     }
 
     private void Start()
-    {      
+    {   
+        Vector2 rotation;   
+        rotation.y = transform.eulerAngles.y / lookSpeed;
+        rotation.x = transform.eulerAngles.x / lookSpeed;
         cameraTransform = Camera.main.transform;
+        OnRotationPressed(rotation);
     }
 
     void OnDestroy(){
