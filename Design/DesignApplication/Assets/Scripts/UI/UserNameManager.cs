@@ -13,18 +13,23 @@ public class UserNameManager : MonoBehaviour
     private List<string> namesList = new();
 
     public event Action StartGame;
+    bool firstLoad = true;
 
     private SaveAndLoadSystem saveAndLoadSystem;
     public void SetValues(SaveAndLoadSystem saveAndLoadSystem){
         this.saveAndLoadSystem = saveAndLoadSystem;
          LoadNames();
         UpdateDropdown();
+         namesDropdown.value = 9;
         namesDropdown.onValueChanged.AddListener(OnValueChange);
         saveButton.onClick.AddListener(OnSaveButtonClicked);
     }
 
     private void OnValueChange(int arg0)
     {
+        firstLoad = false;
+         LoadNames();
+        UpdateDropdown();
        nameInputField.text = namesList[arg0];
     }
 
@@ -47,14 +52,13 @@ public class UserNameManager : MonoBehaviour
     void LoadNames()
     {
         namesList = saveAndLoadSystem.LoadNames();
+        if(firstLoad)
+            namesList.Add("Select User");
     }
 
     void UpdateDropdown()
     {
-        namesDropdown.ClearOptions();
-        if(namesList.Count > 0){
-            nameInputField.text = namesList[0];
-            namesDropdown.AddOptions(namesList);
-        }
+        namesDropdown.ClearOptions();    
+        namesDropdown.AddOptions(namesList);
     }
 }

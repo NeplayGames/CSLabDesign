@@ -711,30 +711,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1018929573170686660, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382679706596199503, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
       propertyPath: m_text
-      value: Left click to select and right click to delete. Click number on item
-        to spawn the item
-      objectReference: {fileID: 0}
-    - target: {fileID: 1018929573170686660, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
-      propertyPath: m_fontSize
-      value: 44.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3221110595537020980, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: Option C
       objectReference: {fileID: 0}
     - target: {fileID: 3583449407405944540, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -767,6 +762,10 @@ PrefabInstance:
     - target: {fileID: 8516337525996746855, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8603723112897984991, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
+      propertyPath: m_Value
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9160310920348933042, guid: 73df9d5619bd2cd48a6cf13a5003f10b, type: 3}
       propertyPath: m_AnchorMax.x
