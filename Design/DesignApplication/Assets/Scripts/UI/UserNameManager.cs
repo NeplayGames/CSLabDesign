@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System;
 
 public class UserNameManager : MonoBehaviour
 {
@@ -11,23 +12,31 @@ public class UserNameManager : MonoBehaviour
 
     private List<string> namesList = new();
 
+    public event Action StartGame;
+
     private SaveAndLoadSystem saveAndLoadSystem;
     public void SetValues(SaveAndLoadSystem saveAndLoadSystem){
         this.saveAndLoadSystem = saveAndLoadSystem;
          LoadNames();
         UpdateDropdown();
-
+        namesDropdown.onValueChanged.AddListener(OnValueChange);
         saveButton.onClick.AddListener(OnSaveButtonClicked);
+    }
+
+    private void OnValueChange(int arg0)
+    {
+       nameInputField.text = namesList[arg0];
     }
 
     void OnSaveButtonClicked()
     {
         string newName = nameInputField.text;
-        if (!string.IsNullOrEmpty(newName) && !namesList.Contains(newName))
+        if (!string.IsNullOrEmpty(newName))
         {       
             saveAndLoadSystem.SaveNames(newName);
             UpdateDropdown();
             nameInputField.text = "";  
+            StartGame?.Invoke();
         }
         else
         {
@@ -43,6 +52,9 @@ public class UserNameManager : MonoBehaviour
     void UpdateDropdown()
     {
         namesDropdown.ClearOptions();
-        namesDropdown.AddOptions(namesList);
+        if(namesList.Count > 0){
+            nameInputField.text = namesList[0];
+            namesDropdown.AddOptions(namesList);
+        }
     }
 }

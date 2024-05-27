@@ -91,6 +91,7 @@ public class ItemSpawner : MonoBehaviour
     }
 
     void OnDestroy(){
+        if(inputManager == null)return;
          inputManager.mousePositionEvent -= MovePreview;  
         inputManager.objectRotation -= Rotate;
          inputManager.onMouseLeftClick -= AddItem;

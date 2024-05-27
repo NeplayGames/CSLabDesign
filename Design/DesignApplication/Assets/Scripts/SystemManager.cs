@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SystemManager : MonoBehaviour
 {
@@ -19,14 +20,26 @@ public class SystemManager : MonoBehaviour
     {
         inputManager = new();
         savingSystem = new();
-        movement.SetInputManger(inputManager);
-        userNameManager.SetValues(savingSystem);
-        SetItems(itemDataBase);
+        userNameManager.StartGame += StartGame;
+        inputManager.reloadScene += ReloadGame;
+         userNameManager.SetValues(savingSystem);
+
     }
 
-    private void ShowUI(bool showUI)
+    private void ReloadGame()
     {
-        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;  
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void StartGame()
+    {
+        movement.SetInputManger(inputManager);
+          Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;  
+        SetItems(itemDataBase);
+        userNameManager.gameObject.SetActive(false);
     }
 
     private void SetItems(ItemDataBase itemDataBase)
@@ -43,6 +56,9 @@ public class SystemManager : MonoBehaviour
     void Update(){
         inputManager.Run();
     }
+
     void OnDestroy(){
+        userNameManager.StartGame -= StartGame;
+        inputManager.reloadScene -= ReloadGame;
     }
 }

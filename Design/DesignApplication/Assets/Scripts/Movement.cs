@@ -11,8 +11,9 @@ public class Movement : MonoBehaviour
     private Transform cameraTransform;
 
     private InputManager inputManager;
-
+    private bool gameRunning = false;
     public void SetInputManger(InputManager inputMan){
+        gameRunning = true;
         this.inputManager = inputMan;
         inputManager.movmentAction += OnMovemntPressed;
         inputManager.rotationAction += OnRotationPressed;
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
 
     private void OnRotationPressed(Vector2 rotation)
     {
+        if(!gameRunning) return;
         transform.eulerAngles = new Vector2(0, rotation.y) * lookSpeed;
         Quaternion cameraRotation = Quaternion.Euler(rotation.x * lookSpeed, 0, 0);
         cameraTransform.localRotation = cameraRotation;
@@ -27,6 +29,7 @@ public class Movement : MonoBehaviour
 
     private void OnMovemntPressed(float horizontalMove, float virticalMove )
     {
+        if(!gameRunning) return;
         Vector3 move = new Vector3(horizontalMove, 0, virticalMove);
         move = transform.TransformDirection(move);
         move *= MovementSpeed;
@@ -44,6 +47,7 @@ public class Movement : MonoBehaviour
     }
 
     void OnDestroy(){
+        if(!gameRunning) return;
         inputManager.movmentAction -= OnMovemntPressed;
         inputManager.rotationAction -= OnRotationPressed;
     }

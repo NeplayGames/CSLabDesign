@@ -10,6 +10,7 @@ public class InputManager
     public event Action onMouseLeftClick;
     public event Action onMouseRightClick;
     public event Action objectRotation;
+    public event Action reloadScene;
     private bool isUIShown = false;
     public event Action<bool> showUI;
     public event Action<Vector3> mousePositionEvent;
@@ -17,13 +18,12 @@ public class InputManager
     Vector3 mousePosition;
     public InputManager()
     {
-         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;  
         showUI?.Invoke(isUIShown);
     }
 
     public void Run(){
         HandleQuit();
+        HandleReload();
         ShowUI();
         HandleMouseLeftClick();
         handleMousePosition();
@@ -32,6 +32,12 @@ public class InputManager
         HandleCameraRotation();
         HandleObjectRotation();
    }
+
+    private void HandleReload()
+    {
+          if(Input.GetKeyDown(KeyCode.Tab))
+            reloadScene?.Invoke();
+    }
 
     private void HandleObjectRotation()
     {

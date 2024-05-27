@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class SaveAndLoadSystem 
 {
-    
-    public string SavingSystemName = Path.Combine(Application.dataPath, "Resources", "SaveInfo");
+    private string userName;
+    public string SavingSystemName  {get { return Path.Combine(Application.dataPath, "Resources", $"{userName}SaveInfo"); }}
     public string userSystemName = Path.Combine(Application.dataPath, "Resources", "UserInfo");
 
     public SaveAndLoadSystem()
     {
-        LoadAllItems();
     }
 
     private void LoadAllItems()
@@ -31,9 +30,13 @@ public class SaveAndLoadSystem
      public void SaveNames(string name)
     {
        var names = LoadNames();
-       names.Add(name);
+       if(!names.Contains(name))
+            names.Add(name);
+       userName = name;
        string jsonData = JsonUtility.ToJson(new NamesList(names), true);
        File.WriteAllText(userSystemName, jsonData);
+       Debug.Log($"FIles name written {names.Count}");
+        LoadAllItems();
     }
 
     public List<string> LoadNames()
@@ -41,8 +44,11 @@ public class SaveAndLoadSystem
          if (File.Exists(userSystemName))
         {
             // Read the existing data from the file
-            string j = File.ReadAllText(SavingSystemName);
+            string j = File.ReadAllText(userSystemName);
+            Debug.Log(j);
              NamesList namesList = JsonUtility.FromJson<NamesList>(j);
+         Debug.Log($"FIles name written {namesList.names.Count}");
+
             return namesList.names;
         }                
         return new List<string>();     
