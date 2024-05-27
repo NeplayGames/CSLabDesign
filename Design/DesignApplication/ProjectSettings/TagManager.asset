@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Preview
   - Block
-  - Snap
   layers:
   - Default
   - TransparentFX

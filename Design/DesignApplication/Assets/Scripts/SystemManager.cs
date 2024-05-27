@@ -8,6 +8,7 @@ public class SystemManager : MonoBehaviour
 {
     [SerializeField] private ItemDataBase itemDataBase;
     [SerializeField] private ItemSpawner itemSpawner;
+    [SerializeField] private UserNameManager userNameManager;
     [SerializeField] private Movement movement;
     [SerializeField] private GameObject UI;
     [SerializeField] private Transform itemButtonParents;
@@ -19,6 +20,7 @@ public class SystemManager : MonoBehaviour
         inputManager = new();
         savingSystem = new();
         movement.SetInputManger(inputManager);
+        userNameManager.SetValues(savingSystem);
         SetItems(itemDataBase);
     }
 

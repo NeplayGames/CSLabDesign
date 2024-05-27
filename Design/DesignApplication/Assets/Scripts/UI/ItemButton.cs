@@ -7,12 +7,14 @@ public class ItemButton : MonoBehaviour
 {
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI numberText;
+    [SerializeField] private TextMeshProUGUI nameText;
     private Item item;
     private int buttonNumber;
    
     private ItemSpawner itemSpawner;
     public void SetItem(Sprite itemSprite, Item item, ItemSpawner spawner, int number){
         numberText.text = $"{number}";
+        nameText.text = Utilities.GetItemName(item.eItemType);
         buttonNumber = number;
         itemSpawner = spawner;
         image.sprite = itemSprite;

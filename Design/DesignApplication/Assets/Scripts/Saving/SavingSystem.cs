@@ -7,7 +7,8 @@ using UnityEngine;
 public class SaveAndLoadSystem 
 {
     
-    public string SavingSystemName = Application.persistentDataPath + "/SaveInfo";
+    public string SavingSystemName = Path.Combine(Application.dataPath, "Resources", "SaveInfo");
+    public string userSystemName = Path.Combine(Application.dataPath, "Resources", "UserInfo");
 
     public SaveAndLoadSystem()
     {
@@ -27,6 +28,25 @@ public class SaveAndLoadSystem
         }
     }
 
+     public void SaveNames(string name)
+    {
+       var names = LoadNames();
+       names.Add(name);
+       string jsonData = JsonUtility.ToJson(new NamesList(names), true);
+       File.WriteAllText(userSystemName, jsonData);
+    }
+
+    public List<string> LoadNames()
+    {
+         if (File.Exists(userSystemName))
+        {
+            // Read the existing data from the file
+            string j = File.ReadAllText(SavingSystemName);
+             NamesList namesList = JsonUtility.FromJson<NamesList>(j);
+            return namesList.names;
+        }                
+        return new List<string>();     
+    }
       void LoadAndInstantiatePrefab(ItemData prefabData)
     {
         GameObject prefab = Resources.Load<GameObject>(prefabData.name);
@@ -94,6 +114,7 @@ public class SaveAndLoadSystem
         Debug.Log($"The file is store in {SavingSystemName}");
     }
 
+    // Use this method to load data from a JSON file in the Resources folder
     [System.Serializable]
     public class ItemData
     {
@@ -106,5 +127,16 @@ public class SaveAndLoadSystem
     [System.Serializable]
     public class ItemDatasWrapper{
         public List<ItemData> data = new();
+    }
+    
+    [System.Serializable]
+    private class NamesList
+    {
+        public List<string> names;
+
+        public NamesList(List<string> names)
+        {
+            this.names = names;
+        }
     }
 }

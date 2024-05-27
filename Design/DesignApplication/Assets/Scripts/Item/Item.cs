@@ -14,4 +14,6 @@ public class Item : MonoBehaviour
 public enum EItemType {
     Computer = 0,
     RecycleBin = 1,
+    TV = 2,
+    VR = 3,
 }

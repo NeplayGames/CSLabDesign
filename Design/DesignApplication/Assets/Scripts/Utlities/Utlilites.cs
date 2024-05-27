@@ -15,6 +15,8 @@ using UnityEditor;
         {
             EItemType.Computer => "Computer",
             EItemType.RecycleBin => "RecycleBin",
+            EItemType.TV => "TV",
+            EItemType.VR => "VR",
             _ => "",
         };
        }
