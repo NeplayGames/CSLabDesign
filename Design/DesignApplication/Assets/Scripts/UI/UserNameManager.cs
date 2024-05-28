@@ -53,7 +53,7 @@ public class UserNameManager : MonoBehaviour
     {
         namesList = saveAndLoadSystem.LoadNames();
         if(firstLoad)
-            namesList.Add("Select User");
+            namesList.Add("Select Profile");
     }
 
     void UpdateDropdown()

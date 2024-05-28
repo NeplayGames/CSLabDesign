@@ -11,20 +11,13 @@ public class InputManager
     public event Action onMouseRightClick;
     public event Action objectRotation;
     public event Action reloadScene;
-    private bool isUIShown = false;
-    public event Action<bool> showUI;
     public event Action<Vector3> mousePositionEvent;
     Vector2 rotation = Vector2.zero;
     Vector3 mousePosition;
-    public InputManager()
-    {
-        showUI?.Invoke(isUIShown);
-    }
 
     public void Run(){
         HandleQuit();
         HandleReload();
-        ShowUI();
         HandleMouseLeftClick();
         handleMousePosition();
         HandleMouseRightClick();
@@ -77,24 +70,6 @@ public class InputManager
         rotation.y += Input.GetAxis("Mouse X");
         rotation.x -= Input.GetAxis("Mouse Y");
         rotationAction?.Invoke(rotation);
-    }
-
-    private void ShowUI()
-    {
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            EnableUI();
-        }
-         if(Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            EnableUI();
-        }
-    }
-
-    public void EnableUI()
-    {
-        isUIShown = !isUIShown;
-        showUI?.Invoke(isUIShown);
     }
 
     private void HandleMovement()

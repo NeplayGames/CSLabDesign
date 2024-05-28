@@ -51,21 +51,16 @@ public class ItemSpawner : MonoBehaviour
     }
 
     private void DeleteItem()
-    {
-         
-             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 30f, itemLayer))
-            {
-                prefab = hit.transform.gameObject;
-                
-            }
-            if(prefab == null)
-                return; 
-         
+    {        
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 30f, itemLayer))
+        {
+            prefab = hit.transform.gameObject;         
+        }
+        if(prefab == null)
+            return;  
         Item item = prefab.GetComponent<Item>();
         savingSystem.RemoveItem(item.ID);
-                print(item.ID);
-
         Destroy(prefab);
         prefab = null;
     }
@@ -84,18 +79,17 @@ public class ItemSpawner : MonoBehaviour
                 ID = item.ID;
             }
             return; 
-         }
-       
+         }   
         savingSystem.SavePrefab(currentItemName, ID, prefab.transform.position, prefab.transform.eulerAngles);
         prefab = null;
     }
 
     void OnDestroy(){
+        //Check if the input manager is being initialized to remove all the event subscriptions
         if(inputManager == null)return;
-         inputManager.mousePositionEvent -= MovePreview;  
+        inputManager.mousePositionEvent -= MovePreview;  
         inputManager.objectRotation -= Rotate;
-         inputManager.onMouseLeftClick -= AddItem;
+        inputManager.onMouseLeftClick -= AddItem;
         inputManager.onMouseRightClick -= DeleteItem;
-
     }
 }
