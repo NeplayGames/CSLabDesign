@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 
-  eItemType: 0
+  itemName: 
 --- !u!1 &1798341622862480
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 4620412918206876}
   - component: {fileID: 33676286839264278}
   - component: {fileID: 23780138257120502}
-  - component: {fileID: 64071577318327798}
   m_Layer: 6
   m_Name: TV
   m_TagString: Untagged
@@ -146,20 +145,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64071577318327798
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798341622862480}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 81856fdb775f9174f9f774cfcb8d828c, type: 3}
 --- !u!1 &4377827371820259890
 GameObject:
   m_ObjectHideFlags: 0
