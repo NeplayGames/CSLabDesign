@@ -27,7 +27,7 @@ public class ItemSpawner : MonoBehaviour
     public void Build(Item template) 
     {
         if(prefab){
-            Destroy(prefab);
+            Destroy(prefab.gameObject);
         }
         currentItemName = template.name;
         template.Do(x => {
