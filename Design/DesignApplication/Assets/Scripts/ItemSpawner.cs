@@ -45,7 +45,7 @@ public class ItemSpawner : MonoBehaviour
         this.savingSystem = savingSystem;
         this.inputManager = inputMan;
         inputManager.mousePositionEvent += MovePreview;
-        inputManager.onMouseLeftClick += AddItem;
+        inputManager.onMouseLeftClick += EditOrAddItem;
         inputManager.onMouseRightClick += DeleteItem;
         inputManager.objectRotation += Rotate;
         inputManager.mouseScrollChange += MouseScrollChange;
@@ -73,7 +73,7 @@ public class ItemSpawner : MonoBehaviour
         prefab = null;
     }
 
-    private void AddItem()
+    private void EditOrAddItem()
     {
          if(prefab == null)
          {
@@ -96,7 +96,7 @@ public class ItemSpawner : MonoBehaviour
         if(inputManager == null)return;
         inputManager.mousePositionEvent -= MovePreview;  
         inputManager.objectRotation -= Rotate;
-        inputManager.onMouseLeftClick -= AddItem;
+        inputManager.onMouseLeftClick -= EditOrAddItem;
         inputManager.onMouseRightClick -= DeleteItem;
          inputManager.mouseScrollChange -= MouseScrollChange;
     }
