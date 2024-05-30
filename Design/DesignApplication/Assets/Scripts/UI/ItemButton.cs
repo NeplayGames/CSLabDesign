@@ -14,7 +14,7 @@ public class ItemButton : MonoBehaviour
     private ItemSpawner itemSpawner;
     public void SetItem(Sprite itemSprite, Item item, ItemSpawner spawner, int number){
         numberText.text = $"{number}";
-        nameText.text = Utilities.GetItemName(item.eItemType);
+        nameText.text = item.itemName;
         buttonNumber = number;
         itemSpawner = spawner;
         image.sprite = itemSprite;
@@ -37,6 +37,11 @@ public class ItemButton : MonoBehaviour
             2 => KeyCode.Alpha2,
             3 => KeyCode.Alpha3,
             4 => KeyCode.Alpha4,
+            5 => KeyCode.Alpha5,
+            6 => KeyCode.Alpha6,
+            7 => KeyCode.Alpha7,
+            8 => KeyCode.Alpha8,
+            9 => KeyCode.Alpha9,
             _=> KeyCode.Alpha0,
         };
     }

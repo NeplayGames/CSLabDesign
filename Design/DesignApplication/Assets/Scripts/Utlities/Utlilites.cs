@@ -10,14 +10,4 @@ using UnityEditor;
             return self;
         }
 
-       public static string GetItemName(EItemType eItemType){
-        return eItemType switch  
-        {
-            EItemType.Computer => "Computer",
-            EItemType.RecycleBin => "RecycleBin",
-            EItemType.TV => "TV",
-            EItemType.VR => "VR",
-            _ => "",
-        };
-       }
     }

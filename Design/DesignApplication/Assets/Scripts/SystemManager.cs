@@ -48,6 +48,7 @@ public class SystemManager : MonoBehaviour
         int i = 1;
         foreach(var item in itemDataBase.eachItems){
             ItemButton itemButton = Instantiate(itemDataBase.itemButton, itemButtonParents).GetComponent<ItemButton>();
+            item.prefab.itemName = item.prefab.name;
             itemButton.SetItem( item.itemSprite, item.prefab, itemSpawner, i);
             i++;
         }

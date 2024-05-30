@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2880499172058666120}
   - component: {fileID: 1402199529797110991}
   m_Layer: 6
-  m_Name: VR_CardBoard Mounted
+  m_Name: VR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

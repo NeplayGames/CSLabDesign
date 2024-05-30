@@ -12,8 +12,15 @@ public class InputManager
     public event Action objectRotation;
     public event Action reloadScene;
     public event Action<Vector3> mousePositionEvent;
+    public event Action<float> mouseScrollChange;
     Vector2 rotation = Vector2.zero;
     Vector3 mousePosition;
+    private float mouseScrollPosition;
+
+    public InputManager()
+    {
+        mouseScrollPosition = Input.GetAxis("Mouse ScrollWheel");
+    }
 
     public void Run(){
         HandleQuit();
@@ -22,9 +29,19 @@ public class InputManager
         handleMousePosition();
         HandleMouseRightClick();
         HandleMovement();
+        HandleMouseScrollPosition();
         HandleCameraRotation();
         HandleObjectRotation();
    }
+
+    private void HandleMouseScrollPosition()
+    {
+        float currentScrollPosition = Input.GetAxis("Mouse ScrollWheel");;
+        if(currentScrollPosition != mouseScrollPosition){
+            mouseScrollChange?.Invoke(currentScrollPosition);
+            mouseScrollPosition = currentScrollPosition;
+        }
+    }
 
     private void HandleReload()
     {
@@ -62,7 +79,7 @@ public class InputManager
     private void HandleMouseLeftClick()
     {
          if(Input.GetMouseButtonDown(0))
-        onMouseLeftClick?.Invoke();
+        onMouseLeftClick?.Invoke();    
     }
 
     private void HandleCameraRotation()

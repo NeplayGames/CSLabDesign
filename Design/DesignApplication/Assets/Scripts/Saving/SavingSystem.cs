@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 
 public class SaveAndLoadSystem 
@@ -61,6 +62,7 @@ public class SaveAndLoadSystem
         {
            Item item = GameObject.Instantiate(prefab, prefabData.position, 
            Quaternion.Euler(prefabData.rotation)).GetComponent<Item>();
+           item.transform.localScale = prefabData.scale;
            item.ID = prefabData.ID;
            
         }
@@ -90,7 +92,7 @@ public class SaveAndLoadSystem
         return data;
     }
 
-    public void SavePrefab(string name, string id, Vector3 position, Vector3 rotation)
+    public void SavePrefab(string name, string id, Vector3 position, Vector3 rotation,Vector3 scale)
     {
 
         List<ItemData> data = GetDatas();
@@ -100,7 +102,8 @@ public class SaveAndLoadSystem
             name = name,
             ID = id,
             position = position,
-            rotation = rotation
+            rotation = rotation, 
+            scale = scale
         };
         data.Add(prefabData);
 
@@ -128,6 +131,7 @@ public class SaveAndLoadSystem
         public string ID;
         public Vector3 position;
         public Vector3 rotation;
+        public Vector3 scale;
     }
 
     [System.Serializable]

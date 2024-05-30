@@ -5,7 +5,7 @@ public class ItemSpawner : MonoBehaviour
 {
     [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask itemLayer;
-    private GameObject prefab;
+    private Item prefab;
     private InputManager inputManager;
     private SaveAndLoadSystem savingSystem;
     private string currentItemName;
@@ -32,7 +32,7 @@ public class ItemSpawner : MonoBehaviour
         currentItemName = template.name;
         template.Do(x => {
             x.SetID();
-            prefab = Instantiate(template.gameObject);
+            prefab = Instantiate(template.gameObject).GetComponent<Item>();
             ID = x.ID;
         }
         );
@@ -48,19 +48,27 @@ public class ItemSpawner : MonoBehaviour
         inputManager.onMouseLeftClick += AddItem;
         inputManager.onMouseRightClick += DeleteItem;
         inputManager.objectRotation += Rotate;
+        inputManager.mouseScrollChange += MouseScrollChange;
+    }
+
+    private void MouseScrollChange(float obj)
+    {
+        if(prefab!=null)
+            prefab.ChangeSize(obj);
     }
 
     private void DeleteItem()
-    {        
+    {     
+        GameObject itemOb = null;   
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 30f, itemLayer))
         {
-            prefab = hit.transform.gameObject;         
+            itemOb = hit.transform.gameObject;         
         }
-        if(prefab == null)
+        if(itemOb == null)
             return;  
-        Item item = prefab.GetComponent<Item>();
-        savingSystem.RemoveItem(item.ID);
+        prefab = itemOb.GetComponent<Item>();
+        savingSystem.RemoveItem(prefab.ID);
         Destroy(prefab);
         prefab = null;
     }
@@ -73,14 +81,13 @@ public class ItemSpawner : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 30f, itemLayer))
             {
                 print(hit.transform.name);
-                prefab = hit.transform.gameObject;
-                Item item = prefab.GetComponent<Item>();
-                currentItemName = Utilities.GetItemName(item.eItemType);
-                ID = item.ID;
+                prefab = hit.transform.gameObject.GetComponent<Item>();
+                currentItemName = prefab.itemName;
+                ID = prefab.ID;
             }
             return; 
          }   
-        savingSystem.SavePrefab(currentItemName, ID, prefab.transform.position, prefab.transform.eulerAngles);
+        savingSystem.SavePrefab(currentItemName, ID, prefab.transform.position, prefab.transform.eulerAngles, prefab.transform.localScale);
         prefab = null;
     }
 
@@ -91,5 +98,6 @@ public class ItemSpawner : MonoBehaviour
         inputManager.objectRotation -= Rotate;
         inputManager.onMouseLeftClick -= AddItem;
         inputManager.onMouseRightClick -= DeleteItem;
+         inputManager.mouseScrollChange -= MouseScrollChange;
     }
 }
