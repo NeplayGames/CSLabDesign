@@ -69,7 +69,7 @@ public class ItemSpawner : MonoBehaviour
             return;  
         prefab = itemOb.GetComponent<Item>();
         savingSystem.RemoveItem(prefab.ID);
-        Destroy(prefab);
+        Destroy(prefab.gameObject);
         prefab = null;
     }
 
