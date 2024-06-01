@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: ItemDataBase
   m_EditorClassIdentifier: 
   eachItems:
-  - <itemSprite>k__BackingField: {fileID: 21300000, guid: 86fc013b134f3694e82f874bb8e376d5, type: 3}
-    <prefab>k__BackingField: {fileID: 2916710705055226497, guid: f5d7cad0d59308d4081e7dae2b424996, type: 3}
   - <itemSprite>k__BackingField: {fileID: 21300000, guid: 0ab08766c036dcd4b85e60aedc7da9fd, type: 3}
     <prefab>k__BackingField: {fileID: 3407978349767288849, guid: 52b43e3fef55dd943a86d2d0c1fa40fe, type: 3}
   - <itemSprite>k__BackingField: {fileID: 21300000, guid: 858018084ce61194382efd8d08de464c, type: 3}
@@ -23,4 +21,10 @@ MonoBehaviour:
     <prefab>k__BackingField: {fileID: 8899811064351612931, guid: 88eb65b4dea685a4cad7ad664104b001, type: 3}
   - <itemSprite>k__BackingField: {fileID: 21300000, guid: f564c0d1f8610d24ba0d1bd5488d0402, type: 3}
     <prefab>k__BackingField: {fileID: 8914635232075667045, guid: 658e64758890bc24ba679c51e2cd2ab3, type: 3}
+  - <itemSprite>k__BackingField: {fileID: 21300000, guid: a65918232eb23cf429fed452ad935c8f, type: 3}
+    <prefab>k__BackingField: {fileID: 4282287996857552921, guid: 0d9504926877ccb4eb834b3102387aa7, type: 3}
+  - <itemSprite>k__BackingField: {fileID: 21300000, guid: a95ca628825666640b084592ff7f8070, type: 3}
+    <prefab>k__BackingField: {fileID: 5643527815706981467, guid: 6144e4ae8ab591e4ca48a48055510c02, type: 3}
+  - <itemSprite>k__BackingField: {fileID: 21300000, guid: 6bee32321f7f1af4989eb3a51d7d10e6, type: 3}
+    <prefab>k__BackingField: {fileID: 8158857770593809902, guid: e5109ae4a91c66447981b5c97241ed48, type: 3}
   itemButton: {fileID: 3021917377028213128, guid: ef9bf99d47da3854192c025c028dfd8f, type: 3}

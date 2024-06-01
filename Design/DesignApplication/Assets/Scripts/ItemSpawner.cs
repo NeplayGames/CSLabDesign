@@ -12,7 +12,8 @@ public class ItemSpawner : MonoBehaviour
     public event Action NewItemSelected;
     private SaveAndLoadSystem savingSystem;
     private string currentItemName;
-    private string ID;    
+    private string ID;   
+    private bool pressX, pressY, pressZ; 
     private void MovePreview(Vector3 mousePosition)
     {
         if(prefab == null) return; 
@@ -20,12 +21,10 @@ public class ItemSpawner : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 30f, floorLayer))
         {
-            /// GetFloorPosition(hit);
             prefab.transform.position = GetFloorPosition(hit);
         }
         else if (Physics.Raycast(ray, out hit, 30f, wallLayer))
         {
-            ///prefab.transform.position = GetFloorPosition(hit);
             prefab.transform.position = hit.point;
         }
     }
@@ -67,12 +66,32 @@ public class ItemSpawner : MonoBehaviour
         inputManager.onMouseRightClick += DeleteItem;
         inputManager.objectRotation += Rotate;
         inputManager.mouseScrollChange += MouseScrollChange;
+        inputManager.onXClick += OnXClick;
+        inputManager.onYClick += OnYClick;
+        inputManager.onZClick += OnZClick;
+    }
+
+    private void OnZClick(bool obj)
+    {
+        pressX = obj;
+    }
+
+    private void OnYClick(bool obj)
+    {
+        pressY = obj;
+    }
+
+    private void OnXClick(bool obj)
+    {
+        pressZ = obj;
     }
 
     private void MouseScrollChange(float obj)
     {
-        if(prefab!=null)
-            prefab.ChangeSize(obj);
+        if(prefab!=null && !pressX && !pressY && !pressZ)
+            prefab.ChangeSize(obj, obj, obj);
+        else
+            prefab.ChangeSize(pressX ? obj : 0, pressY ? obj : 0, pressZ ? obj : 0); 
     }
 
     private void DeleteItem()
@@ -117,5 +136,8 @@ public class ItemSpawner : MonoBehaviour
         inputManager.onMouseLeftClick -= EditOrAddItem;
         inputManager.onMouseRightClick -= DeleteItem;
          inputManager.mouseScrollChange -= MouseScrollChange;
+         inputManager.onXClick -= OnXClick;
+        inputManager.onYClick -= OnYClick;
+        inputManager.onZClick -= OnZClick;
     }
 }

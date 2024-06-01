@@ -6,29 +6,28 @@ public class Item : MonoBehaviour
 {
 
     [HideInInspector] public string ID;
-     public string itemName;
+    [HideInInspector] public string itemName;
 
-    public EItemType eItemType {get; private set;}
     private Vector3 size;
-    private float currentSize;
+    private float currentSizeX;
+    private float currentSizeY;
+    private float currentSizeZ;
     public void SetID(){
         ID = Guid.NewGuid().ToString();
     }
     
     private void Start(){
         size = transform.localScale;
-        currentSize = 1;
+        currentSizeX = 1;
+        currentSizeY = 1;
+        currentSizeZ = 1;
     }
 
-    public void ChangeSize(float delta){
-        this.currentSize += delta;
-        transform.localScale = size * currentSize;
+    public void ChangeSize(float deltaX,float deltaY,float deltaZ){
+        this.currentSizeX += deltaX;
+        this.currentSizeY += deltaY;
+        this.currentSizeZ += deltaZ;
+        transform.localScale = new Vector3(size.x * currentSizeX, size.y * currentSizeY, size.z * currentSizeZ);
     }
-
-}
-
-public enum EItemType{
-    floorType,
-    ceilingType,
 }
 

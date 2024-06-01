@@ -8,6 +8,9 @@ public class InputManager
    public event Action<float, float> movmentAction;
    public event Action<Vector2> rotationAction;
     public event Action onMouseLeftClick;
+    public event Action<bool> onXClick;
+    public event Action<bool> onYClick;
+    public event Action<bool> onZClick;
     public event Action onMouseRightClick;
     public event Action objectRotation;
     public event Action ShowButtons;
@@ -25,6 +28,7 @@ public class InputManager
     public void Run(){
         HandleReload();
         HandleShowButtons();
+        HandleXYZClick();
         HandleMouseLeftClick();
         handleMousePosition();
         HandleMouseRightClick();
@@ -33,6 +37,22 @@ public class InputManager
         HandleCameraRotation();
         HandleObjectRotation();
    }
+
+    private void HandleXYZClick()
+    {
+         if(Input.GetKeyDown(KeyCode.X))
+            onXClick?.Invoke(true);
+            if(Input.GetKeyDown(KeyCode.Y))
+            onYClick?.Invoke(true);
+            if(Input.GetKeyDown(KeyCode.Z))
+            onZClick?.Invoke(true);
+            if(Input.GetKeyUp(KeyCode.X))
+            onXClick?.Invoke(false);
+            if(Input.GetKeyUp(KeyCode.Y))
+            onYClick?.Invoke(false);
+            if(Input.GetKeyUp(KeyCode.Z))
+            onZClick?.Invoke(false);
+    }
 
     private void HandleShowButtons()
     {
