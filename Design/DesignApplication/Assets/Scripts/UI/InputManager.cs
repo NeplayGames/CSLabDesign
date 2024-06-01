@@ -10,21 +10,21 @@ public class InputManager
     public event Action onMouseLeftClick;
     public event Action onMouseRightClick;
     public event Action objectRotation;
+    public event Action ShowButtons;
     public event Action reloadScene;
     public event Action<Vector3> mousePositionEvent;
     public event Action<float> mouseScrollChange;
     Vector2 rotation = Vector2.zero;
     Vector3 mousePosition;
     private float mouseScrollPosition;
-
     public InputManager()
     {
         mouseScrollPosition = Input.GetAxis("Mouse ScrollWheel");
     }
 
     public void Run(){
-        HandleQuit();
         HandleReload();
+        HandleShowButtons();
         HandleMouseLeftClick();
         handleMousePosition();
         HandleMouseRightClick();
@@ -33,6 +33,13 @@ public class InputManager
         HandleCameraRotation();
         HandleObjectRotation();
    }
+
+    private void HandleShowButtons()
+    {
+         if(Input.GetKeyDown(KeyCode.Tab)){
+            ShowButtons?.Invoke();
+         }
+    }
 
     private void HandleMouseScrollPosition()
     {
@@ -45,7 +52,7 @@ public class InputManager
 
     private void HandleReload()
     {
-          if(Input.GetKeyDown(KeyCode.Tab))
+          if(Input.GetKeyDown(KeyCode.Escape))
             reloadScene?.Invoke();
     }
 
@@ -55,12 +62,7 @@ public class InputManager
             objectRotation?.Invoke();
     }
 
-    private void HandleQuit()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape)){
-            Application.Quit();
-        }
-    }
+  
 
     private void handleMousePosition()
     {

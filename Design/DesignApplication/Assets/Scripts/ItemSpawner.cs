@@ -1,12 +1,15 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ItemSpawner : MonoBehaviour
 {
-    [SerializeField] private LayerMask layer;
     [SerializeField] private LayerMask itemLayer;
+    [SerializeField] private LayerMask floorLayer;
+    [SerializeField] private LayerMask wallLayer;
     private Item prefab;
     private InputManager inputManager;
+    public event Action NewItemSelected;
     private SaveAndLoadSystem savingSystem;
     private string currentItemName;
     private string ID;    
@@ -14,16 +17,30 @@ public class ItemSpawner : MonoBehaviour
     {
         if(prefab == null) return; 
         var ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 30f, layer))
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 30f, floorLayer))
         {
-            prefab.transform.position = new Vector3(
-                        Mathf.Round(hit.point.x),
-                        Mathf.Round(hit.point.y) + hit.transform.localScale.y * .5f,
-                        Mathf.Round(hit.point.z)
-                    );
+            /// GetFloorPosition(hit);
+            prefab.transform.position = GetFloorPosition(hit);
+        }
+        else if (Physics.Raycast(ray, out hit, 30f, wallLayer))
+        {
+            ///prefab.transform.position = GetFloorPosition(hit);
+            prefab.transform.position = hit.point;
         }
     }
 
+    private Vector3 GetFloorPosition(RaycastHit hit)
+    {
+        return new Vector3(
+                    Mathf.Round(hit.point.x),
+                    Mathf.Round(hit.point.y) + hit.transform.localScale.y * .5f,
+                    Mathf.Round(hit.point.z)
+                );
+    }
+
+
+  
     public void Build(Item template) 
     {
         if(prefab){
@@ -36,6 +53,7 @@ public class ItemSpawner : MonoBehaviour
             ID = x.ID;
         }
         );
+        NewItemSelected?.Invoke();
     }
     
     public void Rotate() => prefab?.transform.Rotate(new Vector3(0, 90, 0), Space.Self);
@@ -63,9 +81,9 @@ public class ItemSpawner : MonoBehaviour
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 30f, itemLayer))
         {
-            itemOb = hit.transform.gameObject;         
+            itemOb = hit.transform.gameObject;
         }
-        if(itemOb == null)
+        if (itemOb == null)
             return;  
         prefab = itemOb.GetComponent<Item>();
         savingSystem.RemoveItem(prefab.ID);
@@ -81,7 +99,7 @@ public class ItemSpawner : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 30f, itemLayer))
             {
                 print(hit.transform.name);
-                prefab = hit.transform.gameObject.GetComponent<Item>();
+                prefab = hit.transform.GetComponent<Item>();
                 currentItemName = prefab.itemName;
                 ID = prefab.ID;
             }

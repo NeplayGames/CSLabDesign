@@ -9,6 +9,7 @@ public class UserNameManager : MonoBehaviour
     [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private Button saveButton;
     [SerializeField] private TMP_Dropdown namesDropdown;
+    [SerializeField] private Button quitButton;
 
     private List<string> namesList = new();
 
@@ -23,6 +24,12 @@ public class UserNameManager : MonoBehaviour
          namesDropdown.value = 9;
         namesDropdown.onValueChanged.AddListener(OnValueChange);
         saveButton.onClick.AddListener(OnSaveButtonClicked);
+        quitButton.onClick.AddListener(QuitGame) ;
+    }
+
+    private void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void OnValueChange(int arg0)

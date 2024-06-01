@@ -6,7 +6,9 @@ public class Item : MonoBehaviour
 {
 
     [HideInInspector] public string ID;
-    [HideInInspector] public string itemName;
+     public string itemName;
+
+    public EItemType eItemType {get; private set;}
     private Vector3 size;
     private float currentSize;
     public void SetID(){
@@ -23,5 +25,10 @@ public class Item : MonoBehaviour
         transform.localScale = size * currentSize;
     }
 
+}
+
+public enum EItemType{
+    floorType,
+    ceilingType,
 }
 

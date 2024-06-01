@@ -11,10 +11,10 @@ public class SystemManager : MonoBehaviour
     [SerializeField] private ItemSpawner itemSpawner;
     [SerializeField] private UserNameManager userNameManager;
     [SerializeField] private Movement movement;
-    [SerializeField] private GameObject UI;
-    [SerializeField] private Transform itemButtonParents;
+    [SerializeField] private GameObject itemButtonParents;
     private InputManager inputManager;
     private SaveAndLoadSystem savingSystem;
+    public bool runGame = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,15 @@ public class SystemManager : MonoBehaviour
         userNameManager.StartGame += StartGame;
         inputManager.reloadScene += ReloadGame;
          userNameManager.SetValues(savingSystem);
+        inputManager.ShowButtons += ShowButtons;
+        itemSpawner.NewItemSelected += NewItemSelected;
+    }
 
+    private void NewItemSelected()
+    {
+        itemButtonParents.SetActive(false);
+        runGame = true;
+        DeactiveCursor();
     }
 
     private void ReloadGame()
@@ -36,30 +44,48 @@ public class SystemManager : MonoBehaviour
     private void StartGame()
     {
         movement.SetInputManger(inputManager);
-          Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;  
+        DeactiveCursor();
         SetItems(itemDataBase);
         userNameManager.gameObject.SetActive(false);
+        runGame = true;
+    }
+
+    private void DeactiveCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    private void ActiveCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    private void ShowButtons()
+    {
+       itemButtonParents.SetActive(true);
+       runGame = false;
+       ActiveCursor();
     }
 
     private void SetItems(ItemDataBase itemDataBase)
     {
         itemSpawner.SetInputManger(inputManager, savingSystem);
-        int i = 1;
         foreach(var item in itemDataBase.eachItems){
-            ItemButton itemButton = Instantiate(itemDataBase.itemButton, itemButtonParents).GetComponent<ItemButton>();
+            ItemButton itemButton = Instantiate(itemDataBase.itemButton, itemButtonParents.transform).GetComponent<ItemButton>();
             item.prefab.itemName = item.prefab.name;
-            itemButton.SetItem( item.itemSprite, item.prefab, itemSpawner, i);
-            i++;
+            itemButton.SetItem( item.itemSprite, item.prefab, itemSpawner);
         }
     }
 
     void Update(){
-        inputManager.Run();
+        if(runGame)
+            inputManager.Run();
     }
 
     void OnDestroy(){
         userNameManager.StartGame -= StartGame;
         inputManager.reloadScene -= ReloadGame;
+        inputManager.ShowButtons -= ShowButtons;
+
     }
 }
