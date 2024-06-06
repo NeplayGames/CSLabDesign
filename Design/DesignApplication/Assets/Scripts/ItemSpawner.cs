@@ -61,14 +61,14 @@ public class ItemSpawner : MonoBehaviour
     {
         this.savingSystem = savingSystem;
         this.inputManager = inputMan;
-        inputManager.mousePositionEvent += MovePreview;
-        inputManager.onMouseLeftClick += EditOrAddItem;
-        inputManager.onMouseRightClick += DeleteItem;
-        inputManager.objectRotation += Rotate;
-        inputManager.mouseScrollChange += MouseScrollChange;
-        inputManager.onXClick += OnXClick;
-        inputManager.onYClick += OnYClick;
-        inputManager.onZClick += OnZClick;
+        inputManager.MousePositionEvent += MovePreview;
+        inputManager.OnMouseLeftClick += EditOrAddItem;
+        inputManager.OnMouseRightClick += DeleteItem;
+        inputManager.ObjectRotation += Rotate;
+        inputManager.MouseScrollChange += MouseScrollChange;
+        inputManager.OnXClick += OnXClick;
+        inputManager.OnYClick += OnYClick;
+        inputManager.OnZClick += OnZClick;
     }
 
     private void OnZClick(bool obj)
@@ -131,13 +131,13 @@ public class ItemSpawner : MonoBehaviour
     void OnDestroy(){
         //Check if the input manager is being initialized to remove all the event subscriptions
         if(inputManager == null)return;
-        inputManager.mousePositionEvent -= MovePreview;  
-        inputManager.objectRotation -= Rotate;
-        inputManager.onMouseLeftClick -= EditOrAddItem;
-        inputManager.onMouseRightClick -= DeleteItem;
-         inputManager.mouseScrollChange -= MouseScrollChange;
-         inputManager.onXClick -= OnXClick;
-        inputManager.onYClick -= OnYClick;
-        inputManager.onZClick -= OnZClick;
+        inputManager.MousePositionEvent -= MovePreview;  
+        inputManager.ObjectRotation -= Rotate;
+        inputManager.OnMouseLeftClick -= EditOrAddItem;
+        inputManager.OnMouseRightClick -= DeleteItem;
+         inputManager.MouseScrollChange -= MouseScrollChange;
+         inputManager.OnXClick -= OnXClick;
+        inputManager.OnYClick -= OnYClick;
+        inputManager.OnZClick -= OnZClick;
     }
 }

@@ -15,9 +15,11 @@ public class Movement : MonoBehaviour
     public void SetInputManger(InputManager inputMan){
         gameRunning = true;
         this.inputManager = inputMan;
-        inputManager.movmentAction += OnMovemntPressed;
-        inputManager.rotationAction += OnRotationPressed;
+        inputManager.MovmentAction += OnMovemntPressed;
+        inputManager.RotationAction += OnRotationPressed;
     }
+
+    public void SetGameRun(bool running) => gameRunning = running;
 
     private void OnRotationPressed(Vector2 rotation)
     {
@@ -48,7 +50,7 @@ public class Movement : MonoBehaviour
 
     void OnDestroy(){
         if(!gameRunning) return;
-        inputManager.movmentAction -= OnMovemntPressed;
-        inputManager.rotationAction -= OnRotationPressed;
+        inputManager.MovmentAction -= OnMovemntPressed;
+        inputManager.RotationAction -= OnRotationPressed;
     }
 }

@@ -11,21 +11,33 @@ public class SystemManager : MonoBehaviour
     [SerializeField] private ItemSpawner itemSpawner;
     [SerializeField] private UserNameManager userNameManager;
     [SerializeField] private Movement movement;
+    [SerializeField] private CameraCutScene cutsceneCamera;
     [SerializeField] private GameObject itemButtonParents;
     private InputManager inputManager;
     private SaveAndLoadSystem savingSystem;
     public bool runGame = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
         inputManager = new();
         savingSystem = new();
         userNameManager.StartGame += StartGame;
-        inputManager.reloadScene += ReloadGame;
+        inputManager.ReloadScene += ReloadGame;
          userNameManager.SetValues(savingSystem);
         inputManager.ShowButtons += ShowButtons;
         itemSpawner.NewItemSelected += NewItemSelected;
+        inputManager.ShowCutScene += ShowCutScene ;
     }
+
+    private void ShowCutScene(bool start) 
+    {
+        movement.SetGameRun(!start);
+        cutsceneCamera.SetCamera(start);
+    } 
+
+    
 
     private void NewItemSelected()
     {
@@ -84,8 +96,8 @@ public class SystemManager : MonoBehaviour
 
     void OnDestroy(){
         userNameManager.StartGame -= StartGame;
-        inputManager.reloadScene -= ReloadGame;
+        inputManager.ReloadScene -= ReloadGame;
         inputManager.ShowButtons -= ShowButtons;
-
+          inputManager.ShowCutScene -= ShowCutScene ;
     }
 }

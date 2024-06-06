@@ -5,21 +5,24 @@ using UnityEngine;
 
 public class InputManager 
 {
-   public event Action<float, float> movmentAction;
-   public event Action<Vector2> rotationAction;
-    public event Action onMouseLeftClick;
-    public event Action<bool> onXClick;
-    public event Action<bool> onYClick;
-    public event Action<bool> onZClick;
-    public event Action onMouseRightClick;
-    public event Action objectRotation;
+   public event Action<float, float> MovmentAction;
+   public event Action<Vector2> RotationAction;
+    public event Action OnMouseLeftClick;
+    public event Action<bool> OnXClick;
+    public event Action<bool> OnYClick;
+    public event Action<bool> OnZClick;
+    public event Action OnMouseRightClick;
+    public event Action ObjectRotation;
     public event Action ShowButtons;
-    public event Action reloadScene;
-    public event Action<Vector3> mousePositionEvent;
-    public event Action<float> mouseScrollChange;
+    public event Action ReloadScene;
+    public event Action<bool> ShowCutScene;
+    public event Action<Vector3> MousePositionEvent;
+    public event Action<float> MouseScrollChange;
     Vector2 rotation = Vector2.zero;
     Vector3 mousePosition;
     private float mouseScrollPosition;
+
+    private bool showCutScene = false;
     public InputManager()
     {
         mouseScrollPosition = Input.GetAxis("Mouse ScrollWheel");
@@ -36,22 +39,31 @@ public class InputManager
         HandleMouseScrollPosition();
         HandleCameraRotation();
         HandleObjectRotation();
+        HandleCutScene();
    }
+
+    private void HandleCutScene()
+    {
+         if(Input.GetKeyDown(KeyCode.C)){
+            showCutScene = !showCutScene;
+            ShowCutScene?.Invoke(showCutScene);
+         }
+    }
 
     private void HandleXYZClick()
     {
          if(Input.GetKeyDown(KeyCode.X))
-            onXClick?.Invoke(true);
+            OnXClick?.Invoke(true);
             if(Input.GetKeyDown(KeyCode.Y))
-            onYClick?.Invoke(true);
+            OnYClick?.Invoke(true);
             if(Input.GetKeyDown(KeyCode.Z))
-            onZClick?.Invoke(true);
+            OnZClick?.Invoke(true);
             if(Input.GetKeyUp(KeyCode.X))
-            onXClick?.Invoke(false);
+            OnXClick?.Invoke(false);
             if(Input.GetKeyUp(KeyCode.Y))
-            onYClick?.Invoke(false);
+            OnYClick?.Invoke(false);
             if(Input.GetKeyUp(KeyCode.Z))
-            onZClick?.Invoke(false);
+            OnZClick?.Invoke(false);
     }
 
     private void HandleShowButtons()
@@ -65,7 +77,7 @@ public class InputManager
     {
         float currentScrollPosition = Input.GetAxis("Mouse ScrollWheel");;
         if(currentScrollPosition != mouseScrollPosition){
-            mouseScrollChange?.Invoke(currentScrollPosition);
+            MouseScrollChange?.Invoke(currentScrollPosition);
             mouseScrollPosition = currentScrollPosition;
         }
     }
@@ -73,13 +85,13 @@ public class InputManager
     private void HandleReload()
     {
           if(Input.GetKeyDown(KeyCode.Escape))
-            reloadScene?.Invoke();
+            ReloadScene?.Invoke();
     }
 
     private void HandleObjectRotation()
     {
         if(Input.GetKeyDown(KeyCode.R))
-            objectRotation?.Invoke();
+            ObjectRotation?.Invoke();
     }
 
   
@@ -88,27 +100,27 @@ public class InputManager
     {
        if(mousePosition != Input.mousePosition){
         mousePosition = Input.mousePosition;
-        mousePositionEvent?.Invoke(mousePosition);
+        MousePositionEvent?.Invoke(mousePosition);
        }
     }
 
     private void HandleMouseRightClick()
     {
         if(Input.GetMouseButtonDown(1))
-        onMouseRightClick?.Invoke();
+        OnMouseRightClick?.Invoke();
     }
 
     private void HandleMouseLeftClick()
     {
          if(Input.GetMouseButtonDown(0))
-        onMouseLeftClick?.Invoke();    
+        OnMouseLeftClick?.Invoke();    
     }
 
     private void HandleCameraRotation()
     {
         rotation.y += Input.GetAxis("Mouse X");
         rotation.x -= Input.GetAxis("Mouse Y");
-        rotationAction?.Invoke(rotation);
+        RotationAction?.Invoke(rotation);
     }
 
     private void HandleMovement()
@@ -116,7 +128,7 @@ public class InputManager
         float horizontalMove = Input.GetAxis("Horizontal");
         float virticalMove = Input.GetAxis("Vertical");
         if(horizontalMove != 0 || virticalMove != 0){
-            movmentAction?.Invoke(horizontalMove, virticalMove);
+            MovmentAction?.Invoke(horizontalMove, virticalMove);
         }
     }
 }
