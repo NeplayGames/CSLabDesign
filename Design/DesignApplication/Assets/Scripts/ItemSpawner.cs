@@ -40,21 +40,28 @@ public class ItemSpawner : MonoBehaviour
 
 
   
-    public void Build(Item template) 
+    public void Build(Item template)
     {
-        if(prefab){
+        if (prefab)
+        {
             Destroy(prefab.gameObject);
         }
         currentItemName = template.name;
-        template.Do(x => {
+        template.Do(x =>
+        {
             x.SetID();
             prefab = Instantiate(template.gameObject).GetComponent<Item>();
             ID = x.ID;
         }
         );
+        ItemSelected();
+    }
+
+    public void ItemSelected()
+    {
         NewItemSelected?.Invoke();
     }
-    
+
     public void Rotate() => prefab?.transform.Rotate(new Vector3(0, 90, 0), Space.Self);
 
     public void SetInputManger(InputManager inputMan, SaveAndLoadSystem savingSystem)

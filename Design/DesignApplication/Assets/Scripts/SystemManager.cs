@@ -25,7 +25,7 @@ public class SystemManager : MonoBehaviour
         savingSystem = new();
         userNameManager.StartGame += StartGame;
         inputManager.ReloadScene += ReloadGame;
-         userNameManager.SetValues(savingSystem);
+         userNameManager.SetValues(savingSystem, itemSpawner);
         inputManager.ShowButtons += ShowButtons;
         itemSpawner.NewItemSelected += NewItemSelected;
         inputManager.ShowCutScene += ShowCutScene ;
