@@ -13,10 +13,15 @@ public class CameraCutScene : MonoBehaviour
 
     private float covered;
     private int index;
+    private Vector3 postion;
     public void SetCamera(bool start)
     {
         running = start;
-        if(!running)return;
+        if(!running){
+            transform.position = postion;
+            return;
+        }
+        postion = transform.position;
         covered = 0;
         index = -1;
         SetCameraPosition();
